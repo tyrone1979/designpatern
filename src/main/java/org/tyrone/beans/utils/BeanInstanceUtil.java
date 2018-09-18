@@ -26,7 +26,6 @@ public class BeanInstanceUtil {
 		if (annotate != null) {
 			return ((Bean) annotate).name();
 		}
-
 		return null;
 	}
 
