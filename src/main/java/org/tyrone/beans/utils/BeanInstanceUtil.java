@@ -1,10 +1,7 @@
 package org.tyrone.beans.utils;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-
 import org.tyrone.beans.annotations.Bean;
 import org.tyrone.beans.annotations.Default;
 import org.tyrone.beans.annotations.Instance;
@@ -40,24 +37,17 @@ public class BeanInstanceUtil {
 	 * @return an instance
 	 */
 	public static Object instanceBean(Class<?> bean) {
-
-		@SuppressWarnings("rawtypes")
-		Constructor[] ctors = bean.getDeclaredConstructors();
-		for (Constructor<?> ctor : ctors) {
-			if (ctor.getGenericParameterTypes().length == 0) {
-				try {
-					Object instance = ctor.newInstance();
-					instanceBeanWithBean(instance);
-					setDefaultVluae(instance);
-					return instance;
-				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-						| InvocationTargetException e) {
-					e.printStackTrace();
-					return null;
-				}
-			}
+		Object instance;
+		try {
+			instance = bean.newInstance();
+			instanceBeanWithBean(instance);
+			setDefaultVluae(instance);
+			return instance;
+		} catch (InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
-		return null;
 	}
 
 	private static void instanceBeanWithBean(Object parent) {
@@ -65,24 +55,16 @@ public class BeanInstanceUtil {
 		for (Field field : fields) {
 			if (field.getAnnotation(Instance.class) != null) {
 				// instance this field
-				Constructor[] ctors = field.getType().getDeclaredConstructors();
-				for (Constructor ctor : ctors) {
-					if (ctor.getGenericParameterTypes().length == 0) {
-						try {
-							Object child = ctor.newInstance();
-							field.setAccessible(true);
-							field.set(parent, child);
-							instanceBeanWithBean(child);
-							setDefaultVluae(child);
-						} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-								| InvocationTargetException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
-					}
+				try {
+					Object child = field.getType().newInstance();
+					field.setAccessible(true);
+					field.set(parent, child);
+					instanceBeanWithBean(child);
+					setDefaultVluae(child);
+				} catch (InstantiationException | IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-
 			}
 		}
 	}
