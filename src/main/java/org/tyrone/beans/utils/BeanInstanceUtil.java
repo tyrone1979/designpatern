@@ -2,6 +2,8 @@ package org.tyrone.beans.utils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.tyrone.aop.LogAdvice;
 import org.tyrone.aop.Proxy;
@@ -54,6 +56,19 @@ public class BeanInstanceUtil {
 		}
 
 		return null;
+	}
+	
+	public static Map<String,Class> getAnnotatedField(Class<?> bean) {
+		Field[] fields = bean.getDeclaredFields();
+		Map<String,Class> fieldswithAnno=new HashMap<String,Class>();
+		for (Field field : fields) {
+			if (field.getAnnotation(Instance.class) != null) {
+				fieldswithAnno.put(field.getName(), Instance.class);
+			}
+		}
+		return fieldswithAnno;
+		
+		
 	}
 
 	private static void instanceBeanWithBean(Object parent) {

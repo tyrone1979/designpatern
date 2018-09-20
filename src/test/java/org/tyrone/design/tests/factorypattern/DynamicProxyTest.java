@@ -6,13 +6,17 @@ import org.junit.Test;
 import org.tyrone.aop.LogAdvice;
 import org.tyrone.aop.Proxy;
 import org.tyrone.beans.Human;
+import org.tyrone.beans.Oganic;
+import org.tyrone.patterns.factorypattern.BeanFactory;
+import org.tyrone.patterns.factorypattern.ConcreteBeanFactory;
 
 public class DynamicProxyTest {
 	
 	@Test
 	public void cglibTest() {
-		Human man=(Human) Proxy.newInstance(Human.class,new LogAdvice());
-		System.out.println(man.toString());
+		Oganic man=(Oganic) Proxy.newInstance(Oganic.class,new LogAdvice());
+		man.setThisHumanName("Tom");
+		System.out.println(man.getThisHumanName());
 		
 	}
 

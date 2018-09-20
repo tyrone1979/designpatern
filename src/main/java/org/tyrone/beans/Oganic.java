@@ -12,4 +12,8 @@ public class Oganic {
 	public String getThisHumanName() {
 		return oneHuman.getName();
 	}
+	
+	public void setThisHumanName(String name) {
+		this.oneHuman.setName(name);
+	}
 }
