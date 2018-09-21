@@ -8,13 +8,14 @@ Design Pattern Examples
          If there is a field with @Instance annotation, instantiate it.
          
          A JUnit test class shows how to use the factory.
+	 
+      1.2 ThreadPool
          
-2. Singleton Pattern
-3. Proxy Pattern
+2. Proxy Pattern
       
       3.1 Dynamic Proxy
          
          using cglib to implement a before and after injection.
+	 And it also support DI.
 	
-4. Observer Pattern
-5. Command Pattern
+
