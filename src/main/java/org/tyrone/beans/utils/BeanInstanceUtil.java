@@ -70,6 +70,38 @@ public class BeanInstanceUtil {
 		
 		
 	}
+	/**
+	 * for proxy
+	 * @param parentClass 
+	 * @param bean which is a subclass object created by CGLIB
+	 * @return
+	 */
+	public static Object instanceBeanWithBean(Class parentClass,Object bean) {
+		Field[] fields = parentClass.getDeclaredFields();
+		for (Field field : fields) {
+			if (field.getAnnotation(Instance.class) != null) {
+					try {
+						Object child=field.getType().newInstance();
+						field.setAccessible(true);
+						field.set(bean, child);
+						instanceBeanWithBean(child);
+						setDefaultVluae(child);
+						return bean;
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InstantiationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+			}
+		}
+		return null;
+	}
 
 	private static void instanceBeanWithBean(Object parent) {
 		Field[] fields = parent.getClass().getDeclaredFields();
