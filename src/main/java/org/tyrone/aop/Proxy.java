@@ -3,7 +3,7 @@ package org.tyrone.aop;
 import org.tyrone.beans.utils.BeanInstanceUtil;
 import net.sf.cglib.proxy.Enhancer;
 
-public class Proxy {
+public class Proxy { 
 	
 	
 	public static Object newInstance(Class<?> beanClass,Advice advice) {

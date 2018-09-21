@@ -71,7 +71,7 @@ public class BeanInstanceUtil {
 		
 	}
 	/**
-	 * for proxy
+	 * for proxy 
 	 * @param parentClass 
 	 * @param bean which is a subclass object created by CGLIB
 	 * @return
